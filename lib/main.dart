@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:insta/utils/colors.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -13,9 +14,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Instagram Clone',
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: mobileBackgroundColor
-      ),
+      theme: ThemeData.dark()
+          .copyWith(scaffoldBackgroundColor: mobileBackgroundColor),
       home: const Scaffold(
         body: Text('law'),
       ),
