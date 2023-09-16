@@ -59,6 +59,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   backgroundImage: NetworkImage(
                       'https://images.unsplash.com/photo-1682686578842-00ba49b0a71a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxNnx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60'),
                 ),
+                
                 Positioned(
                   bottom: -10,
                   right: 8,
