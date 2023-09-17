@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:insta/resources/auth.dart';
 import 'package:insta/utils/colors.dart';
 import 'package:insta/widgets/text_field.dart';
 
@@ -36,7 +38,7 @@ class _SignupScreenState extends State<SignupScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Flexible(
-              flex: 2,
+              flex: 1,
               child: Container(),
             ),
 
@@ -59,7 +61,6 @@ class _SignupScreenState extends State<SignupScreen> {
                   backgroundImage: NetworkImage(
                       'https://images.unsplash.com/photo-1682686578842-00ba49b0a71a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxNnx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60'),
                 ),
-                
                 Positioned(
                   bottom: -10,
                   right: 8,
@@ -120,7 +121,14 @@ class _SignupScreenState extends State<SignupScreen> {
 
             // button
             InkWell(
-              onTap: () {},
+              onTap: () async {
+                String res = await AuthMethods().signupUser(
+                    email: _emailController.text,
+                    password: _passwordController.text,
+                    username: _usernameController.text,
+                    bio: _bioController.text);
+                print(res);
+              },
               child: Container(
                 width: double.infinity,
                 alignment: Alignment.center,
@@ -138,7 +146,7 @@ class _SignupScreenState extends State<SignupScreen> {
             ),
 
             Flexible(
-              flex: 2,
+              flex: 1,
               child: Container(),
             ),
 
