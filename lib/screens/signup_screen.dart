@@ -1,8 +1,12 @@
+import 'dart:typed_data';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:insta/resources/auth.dart';
 import 'package:insta/utils/colors.dart';
+import 'package:insta/utils/utils.dart';
 import 'package:insta/widgets/text_field.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -17,6 +21,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _bioController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
+  Uint8List? _image;
 
   @override
   void dispose() {
@@ -25,6 +30,13 @@ class _SignupScreenState extends State<SignupScreen> {
     _passwordController.dispose();
     _bioController.dispose();
     _usernameController.dispose();
+  }
+
+  void selectImage() async {
+    Uint8List im = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = im;
+    });
   }
 
   @override
@@ -56,16 +68,22 @@ class _SignupScreenState extends State<SignupScreen> {
 
             Stack(
               children: [
+                _image != null 
+                ? CircleAvatar(
+                  radius: 64,
+                  backgroundImage: MemoryImage(_image!),
+                ):
                 const CircleAvatar(
                   radius: 64,
                   backgroundImage: NetworkImage(
-                      'https://images.unsplash.com/photo-1682686578842-00ba49b0a71a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxNnx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60'),
+                      'https://www.google.com/url?sa=i&url=https%3A%2F%2Fstock.adobe.com%2Fsearch%3Fk%3D%2522default%2Bprofile%2Bpicture%2522&psig=AOvVaw0MhFrpNnwEDQ-poIzwxWDV&ust=1695939790013000&source=images&cd=vfe&opi=89978449&ved=0CBAQjRxqFwoTCMCp5v3py4EDFQAAAAAdAAAAABAE'),
                 ),
                 Positioned(
                   bottom: -10,
                   right: 8,
                   child: IconButton(
-                      onPressed: () {}, icon: const Icon(Icons.add_a_photo)),
+                      onPressed: selectImage,
+                      icon: const Icon(Icons.add_a_photo)),
                 ),
               ],
             ),

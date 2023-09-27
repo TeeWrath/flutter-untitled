@@ -15,36 +15,29 @@ class AuthMethods {
     required String password,
     required String username,
     required String bio,
-    // required Uint8List file,
+    required Uint8List file,
   }) async {
     String res = 'Some error occured';
     try {
       if (email.isNotEmpty ||
           password.isNotEmpty ||
           username.isNotEmpty ||
-          bio.isNotEmpty) {
+          bio.isNotEmpty ||
+          file != null) {
         // register user
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
         print(cred.user!.uid);
+        
         // add user info to cloud firestore
         await _firestore.collection('users').doc(cred.user!.uid).set({
           'email': email,
           'username': username,
           'bio': bio,
-          // 'profile_pic': file,
+          'profile_pic': file,
           'followers': [],
           'following': [],
         });
-
-        // await _firestore.collection('users').add({
-        //   'email': email,
-        //   'username': username,
-        //   'bio': bio,
-        //   'profile_pic': file,
-        //   'followers': [],
-        //   'following': [],
-        // });
         
         res = 'Success';
       }
