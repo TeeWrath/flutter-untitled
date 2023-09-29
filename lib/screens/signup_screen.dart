@@ -76,7 +76,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 const CircleAvatar(
                   radius: 64,
                   backgroundImage: NetworkImage(
-                      'https://www.google.com/url?sa=i&url=https%3A%2F%2Fstock.adobe.com%2Fsearch%3Fk%3D%2522default%2Bprofile%2Bpicture%2522&psig=AOvVaw0MhFrpNnwEDQ-poIzwxWDV&ust=1695939790013000&source=images&cd=vfe&opi=89978449&ved=0CBAQjRxqFwoTCMCp5v3py4EDFQAAAAAdAAAAABAE'),
+                      'https://tse1.mm.bing.net/th?id=OIP.fpHfhXiopsHerHiZdhKIDAAAAA&pid=Api&P=0'),
                 ),
                 Positioned(
                   bottom: -10,
@@ -144,7 +144,9 @@ class _SignupScreenState extends State<SignupScreen> {
                     email: _emailController.text,
                     password: _passwordController.text,
                     username: _usernameController.text,
-                    bio: _bioController.text);
+                    bio: _bioController.text,
+                    file : _image!,
+                    );
                 print(res);
               },
               child: Container(
