@@ -22,6 +22,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _bioController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   Uint8List? _image;
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -37,6 +38,25 @@ class _SignupScreenState extends State<SignupScreen> {
     setState(() {
       _image = im;
     });
+  }
+
+  void signUpUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String res = await AuthMethods().signupUser(
+      email: _emailController.text,
+      password: _passwordController.text,
+      username: _usernameController.text,
+      bio: _bioController.text,
+      file: _image!,
+    );
+    setState(() {
+      _isLoading = false;
+    });
+    if (res != 'success') {
+      showSnackBar(res, context);
+    }
   }
 
   @override
@@ -68,16 +88,16 @@ class _SignupScreenState extends State<SignupScreen> {
 
             Stack(
               children: [
-                _image != null 
-                ? CircleAvatar(
-                  radius: 64,
-                  backgroundImage: MemoryImage(_image!),
-                ):
-                const CircleAvatar(
-                  radius: 64,
-                  backgroundImage: NetworkImage(
-                      'https://tse1.mm.bing.net/th?id=OIP.fpHfhXiopsHerHiZdhKIDAAAAA&pid=Api&P=0'),
-                ),
+                _image != null
+                    ? CircleAvatar(
+                        radius: 64,
+                        backgroundImage: MemoryImage(_image!),
+                      )
+                    : const CircleAvatar(
+                        radius: 64,
+                        backgroundImage: NetworkImage(
+                            'https://tse1.mm.bing.net/th?id=OIP.fpHfhXiopsHerHiZdhKIDAAAAA&pid=Api&P=0'),
+                      ),
                 Positioned(
                   bottom: -10,
                   right: 8,
@@ -139,16 +159,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
             // button
             InkWell(
-              onTap: () async {
-                String res = await AuthMethods().signupUser(
-                    email: _emailController.text,
-                    password: _passwordController.text,
-                    username: _usernameController.text,
-                    bio: _bioController.text,
-                    file : _image!,
-                    );
-                print(res);
-              },
+              onTap: signUpUser,
               child: Container(
                 width: double.infinity,
                 alignment: Alignment.center,
@@ -157,7 +168,13 @@ class _SignupScreenState extends State<SignupScreen> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(4))),
                     color: blueColor),
-                child: const Text('Signup'),
+                child: _isLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(
+                          color: primaryColor,
+                        ),
+                      )
+                    : const Text('Sign up'),
               ),
             ),
 
