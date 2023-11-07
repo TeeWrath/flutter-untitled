@@ -55,6 +55,7 @@ class _SignupScreenState extends State<SignupScreen> {
       _isLoading = false;
     });
     if (res != 'success') {
+      print(res);
       showSnackBar(res, context);
     }
   }
